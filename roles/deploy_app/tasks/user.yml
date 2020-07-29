@@ -1,0 +1,5 @@
+---
+- name: Add the user deployer
+  user:
+    name: "{{ deployer_user }}"
+    shell: /bin/false

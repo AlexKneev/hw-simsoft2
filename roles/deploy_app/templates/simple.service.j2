@@ -1,0 +1,14 @@
+[Unit]
+Description=simple_python app
+After=multi-user.target
+
+[Service]
+User={{ deployer_user }}
+Group={{ deployer_user }}
+Type=idle
+ExecStart=/home/{{ deployer_user }}/{{ app_name }}/venv/bin/python3 /home/{{ deployer_user }}/{{ app_name }}/app.py
+Restart=always
+RestartSe=15
+
+[Install]
+WantedBy=multi-user.target

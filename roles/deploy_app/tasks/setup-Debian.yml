@@ -1,0 +1,7 @@
+---
+- name: Install python packages on Debian Family
+  apt:
+    pkg:
+    - python3-pip
+    - virtualenv
+    - python3-setuptools

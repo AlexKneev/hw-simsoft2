@@ -1,0 +1,20 @@
+---
+# Deployer user creation.
+- include_tasks: user.yml
+
+# Setup/install tasks.
+- include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: app_clone.yml
+
+- include_tasks: appinit-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: appinit-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: service-create.yml

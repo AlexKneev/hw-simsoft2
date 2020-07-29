@@ -1,0 +1,22 @@
+---
+- name: Initiate virtualenv in RedHat based
+  become: true
+  become_method: su
+  become_user: "{{ deployer_user }}"
+  pip: 
+    requirements: "/home/{{ deployer_user }}/{{ app_name }}/requirements.txt"
+    virtualenv: "{{ virtualenv_dir }}"
+    virtualenv_python: python3.6
+
+- name: set app environment
+  become: true
+  become_method: su
+  become_user: "{{ deployer_user }}"
+  shell: |
+    source venv/bin/activate
+    export FLASK_APP=app.py
+    flask db upgrade
+    exit 0
+  args:
+    chdir: "/home/{{ deployer_user }}/{{ app_name }}"
+    executable: /bin/bash

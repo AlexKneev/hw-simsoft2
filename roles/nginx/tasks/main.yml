@@ -1,0 +1,39 @@
+---
+- name: Install Nginx Web Server on RedHat Family
+  yum:
+    name=nginx
+    state=latest
+  when:
+    ansible_os_family == "RedHat"
+  notify:
+    - nginx systemd
+
+- name: Install Nginx Web Server on Debian Family
+  apt:
+    name=nginx
+    state=latest
+  when:
+    ansible_os_family == "Debian"
+  notify:
+    - nginx systemd
+
+- name: SELinux to perm mode
+  selinux:
+    policy: targeted
+    state: permissive
+  when:
+    ansible_os_family == "RedHat"
+
+- name: add HTTP to firewall
+  firewalld:
+    service: http
+    permanent: true
+    immediate: true
+    state: enabled
+  when:
+    ansible_os_family == "RedHat"
+
+#- name: Replace nginx.conf
+#  template:
+#    src=templates/nginx.conf
+#    dest=/etc/nginx/nginx.conf

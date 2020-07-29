@@ -1,0 +1,30 @@
+---
+- name: create service
+  template:
+    src=templates/simple.service.j2
+    dest="/etc/systemd/system/{{ app_name }}.service"
+  notify:
+    - service systemd
+
+- name: Add app config in NGINX for RPM
+  template:
+    src=templates/nginx_app.j2
+    dest="/etc/nginx/conf.d/{{ app_name }}.conf"
+  when:
+    ansible_os_family == "RedHat"
+  notify:
+    - nginx restart
+
+- name: Del default config in NGINX for Deb
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Add app config in NGINX for Deb
+  template:
+    src=templates/nginx_app.j2
+    dest="/etc/nginx/sites-enabled/{{ app_name }}.conf"
+  when:
+    ansible_os_family == "Debian"
+  notify:
+    - nginx restart

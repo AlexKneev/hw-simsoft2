@@ -1,0 +1,39 @@
+---
+- hosts: redhat-servers
+  vars:
+    nginx_user: nginx
+    deployer_user_group: nginx
+  vars_files:
+    - vars.yml
+  become:
+    true
+  become_method:
+    su
+  become_user:
+    root
+  remote_user:
+    vagrant
+  roles:
+   - epel
+   - postgresql
+   - nginx
+   - deploy_app
+
+- hosts: debian-servers
+  vars:
+    nginx_user: www-data
+    deployer_user_group: www-data
+  vars_files:
+    - vars.yml
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    vagrant
+  roles:
+   - postgresql
+   - nginx
+   - deploy_app

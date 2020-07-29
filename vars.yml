@@ -1,0 +1,14 @@
+---
+# Файл переменных 'vars.yml'
+app_name: python-sample-app
+deployer_user: deployer
+app_db_user: worker
+app_db_password: worker
+app_db_name: app
+virtualenv_dir: "/home/{{ deployer_user }}/{{ app_name }}/venv"
+postgresql_databases:
+  - name: "{{ app_db_name }}"
+    owner: "{{ app_db_user }}"
+postgresql_users:
+  - name: "{{ app_db_user }}"
+    password: "{{ app_db_password }}"

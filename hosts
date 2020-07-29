@@ -1,0 +1,5 @@
+[debian-servers]
+127.0.0.1 ansible_ssh_user=vagrant
+
+[redhat-servers]
+127.0.0.1 ansible_ssh_user=vagrant

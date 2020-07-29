@@ -1,0 +1,11 @@
+---
+- name: nginx restart
+  service:
+    name=nginx
+    state=restarted
+
+- name: service systemd
+  systemd:
+    name: "{{ app_name }}.service"
+    enabled: yes
+    state: started
